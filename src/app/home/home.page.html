@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title style="color: #fff">Proyects & Systems Ltda</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<form (ngSubmit)="submitLogin()" #loginForm="ngForm">
+    <h1>Login</h1>
+    <ion-input type="text" placeholder="Usuario" name="usuario"
+               [(ngModel)]="logins.usuario" required></ion-input>
+    <ion-input type="password" Placeholder="Password" name="password"
+               [(ngModel)]="logins.password" required></ion-input>
+    <button type="submit" id="ion_button" [disabled]="!loginForm.form.valid">Login</button>
+</form>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-title style="color: #fff">P&S LTDA &#174;</ion-title>
+    </ion-toolbar>
+</ion-footer>
+
+<ngx-spinner
+        bdColor="rgba(51,51,51,0.8)"
+        size="medium"
+        color="#fff"
+        type="ball-scale-multiple">
+    <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
