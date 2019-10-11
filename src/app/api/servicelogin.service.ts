@@ -47,5 +47,10 @@ export class ServiceloginService {
             );
     }
 
+    listarUsuarios(): Observable<any> {
+        return this.http.get(`${this.apiUrl}/api_pys/listarusuarios`)
+            .pipe(delay(500));
+    }
+
 
 }

@@ -1,19 +1,14 @@
 import {Injectable} from '@angular/core';
 import {LoadingController, ToastController} from '@ionic/angular';
 import Swal from 'sweetalert2';
-import * as FileSaver from 'file-saver';
-import {saveAs} from 'file-saver';
 import * as XLSX from 'xlsx';
 import {File} from '@ionic-native/file/ngx';
 import {FileOpener} from '@ionic-native/file-opener/ngx';
 
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_TYPE_OPENER = 'application/vnd.ms-excel';
-// const EXCEL_TYPE = 'application/octet-stream';
 const EXCEL_EXTENSION = '.xlsx';
 import {FileTransfer, FileUploadOptions, FileTransferObject} from '@ionic-native/file-transfer/ngx';
-
-// const EXCEL_EXTENSION = '.csv';
 
 @Injectable({
     providedIn: 'root'
@@ -75,16 +70,24 @@ export class FuncionesglobalesService {
         return {
             pagingType: 'simple_numbers',
             pageLength: 5,
-            // processing: true,
+            processing: true,
             lengthMenu: [[5, 10, 30, 50, -1], [5, 10, 30, 50, 'All']],
             order: [[1, 'asc']],
             columnDefs: [{className: 'dt-center', targets: '_all'}],
             scrollX: true,
             searching: true,
-            ordering: false,
+            ordering: true,
             responsive: true,
             language: {
-                info: 'Pagina _PAGE_ de _PAGES_'
+                info: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+                sLengthMenu: 'Mostrar _MENU_ registros',
+                sSearch: 'Buscar:',
+                oPaginate: {
+                    sFirst: 'Primero',
+                    sLast:  'Último',
+                    sNext:  'Siguiente',
+                    sPrevious: 'Anterior'
+                }
             }
         };
     }
@@ -110,7 +113,7 @@ export class FuncionesglobalesService {
             this.file.writeExistingFile(url, filename + EXCEL_EXTENSION, data, true).then(() => {
                 this.fileOpener.showOpenWithDialog(url + filename + EXCEL_EXTENSION, EXCEL_TYPE_OPENER);
             }).catch(() => {
-                alert('error creating file at :' + url);
+                console.log('error creating file at :' + url);
             });
         });
     }

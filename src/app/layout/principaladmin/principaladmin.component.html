@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <div style="margin-bottom: 30px">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+              pullingIcon="arrow-dropdown"
+              pullingText="Pull to refresh"
+              refreshingSpinner="circles"
+              refreshingText="Refreshing...">
+      </ion-refresher-content>
+    </ion-refresher>
+  </div>
+
+  <div *ngIf="!dataList">
+    <div class="ion-padding custom-skeleton">
+      <ion-skeleton-text animated style="width: 45%; height: 30px; margin: auto;"></ion-skeleton-text>
+      <ion-skeleton-text animated style="height: 2px;"></ion-skeleton-text>
+      <div class="cositas" style="position: relative;display: flex;">
+        <ion-skeleton-text animated style="width: 100%; height: 30px;"></ion-skeleton-text>
+      </div>
+      <ion-skeleton-text animated style="height: 2px;"></ion-skeleton-text>
+      <div *ngFor="let skeleton of listanimation">
+        <div class="cositas" style="position: relative;display: flex;">
+          <ion-skeleton-text animated style="width: 100%; height: 40px;"></ion-skeleton-text>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div *ngIf="dataList">
+
+    <!--    table para la relacion de horas-->
+    <div class="table-responsive">
+      <table datatable class="hover" width="100%" [dtOptions]="dtOptions">
+        <thead>
+        <tr style="text-align: center;">
+          <th>Cedula</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>E-mail</th>
+          <th>Celular</th>
+          <th>Activo</th>
+          <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let hourslist of listHours">
+          <td>{{hourslist.id_card}}</td>
+          <td>{{hourslist.name| titlecase}}</td>
+          <td>{{hourslist.lastname| titlecase}}</td>
+          <td>{{hourslist.email}}</td>
+          <td>{{hourslist.phone}}</td>
+          <td>
+            <ion-icon *ngIf="hourslist.active == 1" style="color: green"  name="radio-button-on"></ion-icon>
+            <ion-icon *ngIf="hourslist.active == 0" style="color: red" name="radio-button-on"></ion-icon>
+          </td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-outline-success" *ngIf="hourslist.cod_select_hour" (click)="exportar_excel(hourslist.cod_user, hourslist.name +' ' + hourslist.lastname, hourslist.id_card)">
+                <ion-icon name="cloud-download"></ion-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</ion-content>
