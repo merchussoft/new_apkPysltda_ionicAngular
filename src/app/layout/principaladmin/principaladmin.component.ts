@@ -33,7 +33,6 @@ export class PrincipaladminComponent implements OnInit {
     listarUsuarios() {
         this.serviceApi.listarUsuarios()
             .subscribe((response) => {
-                console.log(response);
                 this.dtOptions = this.globalFuntion.iniciar_table();
                 this.dataList = true;
                 this.listHours = response[0];
@@ -43,7 +42,9 @@ export class PrincipaladminComponent implements OnInit {
 
     // tslint:disable-next-line:variable-name
     exportar_excel(cod_user, nombre, id_card) {
+        // tslint:disable-next-line:variable-name
         const json_arreglo = [];
+        // tslint:disable-next-line:variable-name
         const optins_table = [];
         this.serviceApi.reportHoursUser(cod_user)
             .subscribe((response) => {
@@ -51,6 +52,7 @@ export class PrincipaladminComponent implements OnInit {
                 if (response.length > 0) {
                     // @ts-ignore
                     response.forEach((keys: any) => {
+                        // tslint:disable-next-line:variable-name
                         const valores_new = {
                             'Fecha Reporte': keys.select_hours,
                             'Hora Inicia': keys.start_time,

@@ -15,7 +15,7 @@ export class LayoutComponent implements OnInit {
     public nameLastname;
     public email;
     public image;
-    public code;
+    public perfil;
     public appPages: any;
 
     constructor(
@@ -28,7 +28,7 @@ export class LayoutComponent implements OnInit {
     ) {
         this.appPages = [];
         this.initializeApp();
-        this.code = localStorage.getItem('code');
+        this.perfil = localStorage.getItem('perfil');
         this.routers();
         this.nameLastname = localStorage.getItem('nombre') + ' ' + localStorage.getItem('lastname');
         this.email = localStorage.getItem('email');
@@ -56,12 +56,16 @@ export class LayoutComponent implements OnInit {
     }
 
     routers() {
-        this.serviceApi.routes(this.code)
+        this.serviceApi.routes(this.perfil)
             .subscribe((routers) => {
                 // @ts-ignore
-                routers.datos_url.forEach(value => {
-                    this.appPages = [{title: value.name, url: '/' + value.name, icon: value.icon}];
-                });
+                if (routers.validate) {
+                    // @ts-ignore
+                    routers.datos_url.forEach(value => {
+                        this.appPages = [{title: value.name, url: '/' + value.name, icon: value.icon}];
+                    });
+                }
+
             });
     }
 

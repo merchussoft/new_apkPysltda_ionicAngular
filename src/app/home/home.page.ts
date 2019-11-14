@@ -38,7 +38,6 @@ export class HomePage {
             .subscribe((response) => {
                 // @ts-ignore
                 if (response.validate) {
-                    console.log(response[0][0]);
                     this.logins = {usuario: '', password: ''};
                     localStorage.setItem('nombre', response[0][0].name);
                     localStorage.setItem('lastname', response[0][0].lastname);
@@ -46,6 +45,7 @@ export class HomePage {
                     localStorage.setItem('image', response[0][0].image);
                     localStorage.setItem('code', response[0][0].cod_user);
                     localStorage.setItem('id_card', response[0][0].id_card);
+                    localStorage.setItem('perfil', response[0][0].cod_profile);
                     let principal = 'principal';
                     if (+response[0][0].id_card === 1 || +response[0][0].id_card === 2) {
                         principal = 'principal_admin';
