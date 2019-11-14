@@ -43,11 +43,16 @@ export class HomePage {
                     localStorage.setItem('lastname', response[0][0].lastname);
                     localStorage.setItem('email', response[0][0].email);
                     localStorage.setItem('image', response[0][0].image);
-                    localStorage.setItem('code', response[0][0].cod_data_user);
+                    localStorage.setItem('code', response[0][0].cod_user);
                     localStorage.setItem('id_card', response[0][0].id_card);
+                    localStorage.setItem('perfil', response[0][0].cod_profile);
+                    let principal = 'principal';
+                    if (+response[0][0].id_card === 1 || +response[0][0].id_card === 2) {
+                        principal = 'principal_admin';
+                    }
                     setTimeout(() => {
                         this.spinner.hide();
-                        this.navCtrl.navigateForward('/principal');
+                        this.navCtrl.navigateForward('/' + principal);
                     }, 2000);
 
                 } else {

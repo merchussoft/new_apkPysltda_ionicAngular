@@ -24,9 +24,7 @@
                     <ion-skeleton-text animated style="width: 100%; height: 40px;"></ion-skeleton-text>
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <div *ngIf="dataList">
@@ -75,7 +73,7 @@
             <ion-label>Cargar Excel</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button (click)="downloadExcel(code)">
+        <ion-tab-button (click)="downloadExcel()">
             <ion-icon name="cloud-download"></ion-icon>
             <ion-label>Descargar Excel</ion-label>
         </ion-tab-button>
