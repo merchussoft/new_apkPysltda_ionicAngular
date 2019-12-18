@@ -1,3 +1,106 @@
-<p>
-  registrohoras works!
-</p>
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>
+            Registro de horas
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+    <form #RelacionHorasForm="ngForm" (ngSubmit)="enviarHoras()">
+        <ion-list>
+            <ion-item>
+                <ion-label>Fecha Reporte</ion-label>
+                <ion-datetime display-format="YYYY-MM-DD" placeholder="Seleccionar Fecha" name="fechareporte"
+                              #fechareporte="ngModel" [(ngModel)]="reporte.select_hours" cancel-text="Cancelar"
+                              done-text="Aceptar" mode="md" required></ion-datetime>
+            </ion-item>
+
+        </ion-list>
+        <ion-list>
+
+        </ion-list>
+        <ion-list>
+            <ion-item>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="7">
+                            <ion-label>Iniciativa</ion-label>
+                        </ion-col>
+                        <ion-input placeholder="iniciativa ####" maxlength="50" name="iniciativa" #iniciativa="ngModel"
+                                   [(ngModel)]="reporte.initiative" required></ion-input>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+
+        </ion-list>
+        <ion-list>
+            <ion-item>
+                <ion-label>Actividad</ion-label>
+                <ion-select placeholder="Seleccionar" name="actividad" #actividad="ngModel"
+                            [(ngModel)]="reporte.cod_activity" required>
+                    <ion-select-option *ngFor="let actividades of array_actividades"
+                                       value="{{actividades.cod_activity}}">{{actividades.name}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+        <ion-list>
+
+        </ion-list>
+        <ion-list>
+            <ion-item>
+                <ion-label>Hora Inicio</ion-label>
+                <ion-datetime display-format="HH:mm" #hora_inicio="ngModel" name="hora_inicio"
+                              [(ngModel)]="reporte.start_time" placeholder="Seleccionar Hora" cancel-text="Cancelar"
+                              done-text="Aceptar" mode="ios"></ion-datetime>
+            </ion-item>
+        </ion-list>
+
+        <ion-list>
+            <ion-item>
+                <ion-label>Hora Fin</ion-label>
+                <ion-datetime display-format="HH:mm" #hora_final="ngModel" name="hora_final"
+                              [(ngModel)]="reporte.final_hour" placeholder="Seleccionar Hora" cancel-text="Cancelar"
+                              done-text="Aceptar" mode="ios"></ion-datetime>
+            </ion-item>
+        </ion-list>
+
+        <!--    <ion-list>-->
+        <!--      <ion-item>-->
+        <!--        <ion-grid>-->
+        <!--          <ion-row>-->
+        <!--            <ion-col size="7">-->
+        <!--              <ion-label>Direccion</ion-label>-->
+        <!--            </ion-col>-->
+        <!--            <ion-input placeholder="Cra 30 / Alkosto 68" maxlength="50" name="direccion"-->
+        <!--                       #direccion="ngModel"-->
+        <!--                       [(ngModel)]="reporte.direccion" required></ion-input>-->
+        <!--          </ion-row>-->
+        <!--        </ion-grid>-->
+        <!--      </ion-item>-->
+        <!--    </ion-list>-->
+
+        <ion-list>
+            <ion-item>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col size="12">
+                            <ion-label>Detalle Actividad</ion-label>
+                        </ion-col>
+                        <ion-textarea placeholder="Describa la actividad realizada" name="detalleactividad"
+                                      #detalleactividad="ngModel" [(ngModel)]="reporte.activity_detail"
+                                      required></ion-textarea>
+                    </ion-row>
+                </ion-grid>
+            </ion-item>
+        </ion-list>
+        <ion-button expand="full" shape="round" type="submit" [disabled]="!RelacionHorasForm.form.valid">Registrar
+        </ion-button>
+    </form>
+</ion-content>

@@ -9,7 +9,7 @@ import {catchError, tap, delay} from 'rxjs/operators';
 export class ServiceloginService {
     apiUrl = 'http://merchussoft.online/newwspysltda/public';
 
-    // apiUrl = 'http://127.0.0.1:8080/ws_newpyslda/public/index.php';
+    //apiUrl = 'http://127.0.0.1:8080/newwspysltda/public/index.php';
 
     constructor(private http: HttpClient) {
     }
@@ -40,11 +40,26 @@ export class ServiceloginService {
             );
     }
 
-    routes(card: number) {
-        return this.http.get(this.apiUrl + '/api_pys/routers/' + card)
+    routes(profile: number) {
+        return this.http.get(this.apiUrl + '/api_pys/routers/' + profile)
             .pipe(
                 catchError(this.handleError('login', []))
             );
+    }
+
+    activities() {
+        return this.http.get(this.apiUrl + '/api_pys/selecthoras')
+            .pipe(delay(500));
+    }
+
+    registerHours(infoForm) {
+        return this.http.post(this.apiUrl + '/api_pys/inserthoras', infoForm)
+            .pipe(delay(1000));
+    }
+
+    listarUsuarios(): Observable<any> {
+        return this.http.get(`${this.apiUrl}/api_pys/listarusuarios`)
+            .pipe(delay(500));
     }
 
 

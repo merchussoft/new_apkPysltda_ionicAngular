@@ -33,6 +33,7 @@ export class HomePage {
 
     submitLogin() {
         // this.functionGlobales.loadings('Please wait..');
+        let imagen = '/assets/imageUser/user.png';
         this.spinner.show();
         this.api.login(this.logins)
             .subscribe((response) => {
@@ -42,12 +43,20 @@ export class HomePage {
                     localStorage.setItem('nombre', response[0][0].name);
                     localStorage.setItem('lastname', response[0][0].lastname);
                     localStorage.setItem('email', response[0][0].email);
-                    localStorage.setItem('image', response[0][0].image);
+                    // tslint:disable-next-line:no-unused-expression
+                    (response[0][0].image !== '') ? imagen = response[0][0].image : imagen;
+                    localStorage.setItem('image', imagen);
                     localStorage.setItem('code', response[0][0].cod_data_user);
+                    localStorage.setItem('code_user', response[0][0].cod_user);
                     localStorage.setItem('id_card', response[0][0].id_card);
+                    localStorage.setItem('profile', response[0][0].cod_profile);
                     setTimeout(() => {
                         this.spinner.hide();
-                        this.navCtrl.navigateForward('/principal');
+                        if (response[0][0].cod_profile === '1') {
+                            this.navCtrl.navigateForward('/principal_admin');
+                        } else {
+                            this.navCtrl.navigateForward('/principal');
+                        }
                     }, 2000);
 
                 } else {

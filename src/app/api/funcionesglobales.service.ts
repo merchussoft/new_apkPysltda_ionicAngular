@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {LoadingController, ToastController} from '@ionic/angular';
+import {LoadingController, ToastController, ModalController} from '@ionic/angular';
 import Swal from 'sweetalert2';
 import * as FileSaver from 'file-saver';
 import {saveAs} from 'file-saver';
@@ -12,6 +12,7 @@ const EXCEL_TYPE_OPENER = 'application/vnd.ms-excel';
 // const EXCEL_TYPE = 'application/octet-stream';
 const EXCEL_EXTENSION = '.xlsx';
 import {FileTransfer, FileUploadOptions, FileTransferObject} from '@ionic-native/file-transfer/ngx';
+import {LocalNotifications} from '@ionic-native/local-notifications/ngx';
 
 // const EXCEL_EXTENSION = '.csv';
 
@@ -25,11 +26,13 @@ export class FuncionesglobalesService {
         public toastController: ToastController,
         public file: File,
         private fileOpener: FileOpener,
-        private transfer: FileTransfer
+        private transfer: FileTransfer,
+        private localNotifications: LocalNotifications,
+        private modalController: ModalController
     ) {
     }
 
-    async loadings(menssage) {
+    async loadings(menssage: string = '') {
         return await this.loadingCtrl.create({
             message: menssage,
             spinner: 'lines',
@@ -46,17 +49,17 @@ export class FuncionesglobalesService {
         });
     }
 
-    swalConfirm(titulo: string, mensaje: string, mensajebutton: string, tipos: string) {
+    swalConfirm(titulo: string, mensaje: string, mensajebuttonconfirm: string, mensajebuttoncancel: string, icono: string) {
         return Swal.fire({
-            // @ts-ignore
-            type: tipos,
             title: titulo,
             text: mensaje,
+            // @ts-ignore
+            type: icono,
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            // @ts-ignore
-            confirmButtonText: mensaje_button
+            confirmButtonText: mensajebuttonconfirm,
+            cancelButtonText: mensajebuttoncancel
         });
     }
 
@@ -119,7 +122,9 @@ export class FuncionesglobalesService {
         const buf = new ArrayBuffer(s.length);
         const view = new Uint8Array(buf);
         // tslint:disable-next-line:triple-equals no-bitwise
-        for (let i = 0; i != s.length; ++i) { view[i] = s.charCodeAt(i) & 0xFF; }
+        for (let i = 0; i != s.length; ++i) {
+            view[i] = s.charCodeAt(i) & 0xFF;
+        }
         return buf;
     }
 
@@ -130,6 +135,33 @@ export class FuncionesglobalesService {
             }).then(() => {
                 return directoryEntry.nativeURL + 'ReportHorsPysltda/';
             });
+        });
+    }
+
+    notificacionHoras(horas: number , mensaje: string) {
+        const datatime = new Date();
+        // tslint:disable-next-line:variable-name
+        let dias_mes = new Date(datatime.getFullYear(), datatime.getMonth() + 1, 0).getDate();
+        // tslint:disable-next-line:variable-name
+        let cantidad_dias = dias_mes - datatime.getDate();
+
+        // console.log('mirando algo ==> ', horas);
+        if (cantidad_dias < 15 && !horas) {
+            this.localNotifications.schedule({
+                title: 'Reporte de horas',
+                text: mensaje,
+                foreground: true,
+                vibrate: true,
+                // trigger: { at: new Date(new Date().getTime() + 3600) },
+                led: { color: '#FFFFFF', on: 500, off: 500 },
+                sound: null
+            });
+        }
+    }
+
+    async presentModal(templateModal) {
+        return await this.modalController.create({
+            component: templateModal
         });
     }
 

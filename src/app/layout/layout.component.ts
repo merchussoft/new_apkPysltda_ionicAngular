@@ -5,6 +5,8 @@ import {StatusBar} from '@ionic-native/status-bar/ngx';
 import {NavController} from '@ionic/angular';
 import {ServiceloginService} from '../api/servicelogin.service';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {FuncionesglobalesService} from '../api/funcionesglobales.service';
+
 
 @Component({
     selector: 'app-layout',
@@ -16,6 +18,7 @@ export class LayoutComponent implements OnInit {
     public email;
     public image;
     public code;
+    public profile;
     public appPages: any;
 
     constructor(
@@ -24,11 +27,13 @@ export class LayoutComponent implements OnInit {
         private statusBar: StatusBar,
         public navCtrl: NavController,
         private serviceApi: ServiceloginService,
-        private spinner: NgxSpinnerService
+        private spinner: NgxSpinnerService,
+        private globalFunction: FuncionesglobalesService
     ) {
         this.appPages = [];
         this.initializeApp();
         this.code = localStorage.getItem('code');
+        this.profile = localStorage.getItem('profile');
         this.routers();
         this.nameLastname = localStorage.getItem('nombre') + ' ' + localStorage.getItem('lastname');
         this.email = localStorage.getItem('email');
@@ -47,22 +52,26 @@ export class LayoutComponent implements OnInit {
 
 
     cerrarSesion() {
-        this.spinner.show();
-        setTimeout(() => {
-            localStorage.clear();
-            this.navCtrl.navigateForward('/home');
-            this.spinner.hide();
-        }, 2000);
+        this.globalFunction.swalConfirm('Cerrar sesion', '¿Desea salir de la aplicacion?', 'Aceptar', 'Cancelar', 'info')
+            .then((result) => {
+                if (result.value) {
+                    localStorage.clear();
+                    this.navCtrl.navigateRoot('/home');
+                }
+            });
     }
 
     routers() {
-        this.serviceApi.routes(this.code)
+        this.serviceApi.routes(this.profile)
             .subscribe((routers) => {
                 // @ts-ignore
                 routers.datos_url.forEach(value => {
-                    this.appPages = [{title: value.name, url: '/' + value.name, icon: value.icon}];
+                    this.appPages.push({title: value.name, url: '/' + value.name, icon: value.icon});
                 });
             });
     }
+
+
+
 
 }

@@ -20,6 +20,13 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { FileTransfer} from '@ionic-native/file-transfer/ngx';
+import {NgFallimgModule} from 'ng-fallimg';
+import {LocalNotifications} from '@ionic-native/local-notifications/ngx';
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import { Camera} from '@ionic-native/camera/ngx';
+import {FilePath} from '@ionic-native/file-path/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { ModalModule} from 'ngx-bootstrap';
 
 @NgModule({
     declarations: [AppComponent],
@@ -33,7 +40,12 @@ import { FileTransfer} from '@ionic-native/file-transfer/ngx';
         IonicStorageModule.forRoot(),
         NgxDatatableModule,
         NgxSpinnerModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        NgFallimgModule.forRoot({
+            default: '/assets/imageUser/user.png'
+        }),
+        AngularFontAwesomeModule,
+        ModalModule.forRoot()
     ],
     providers: [
         StatusBar,
@@ -48,7 +60,11 @@ import { FileTransfer} from '@ionic-native/file-transfer/ngx';
         Network,
         File,
         FileOpener,
-        FileTransfer
+        FileTransfer,
+        LocalNotifications,
+        Camera,
+        FilePath,
+        WebView
     ],
     bootstrap: [AppComponent]
 })

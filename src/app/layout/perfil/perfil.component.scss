@@ -1,0 +1,25 @@
+.imagen_visor {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+  margin-bottom: 70px;
+}
+
+i {
+  position: absolute;
+  font-size: 35px;
+  margin: 50% 20%;
+  border-radius: 10px;
+  color: rgba(56, 130, 255, 1);
+  //background: rgba(255, 255, 255, 0.8);
+}
+
+#formPerfil {
+  width: 320px !important;
+  margin: auto !important;
+}
+
+#formPerfil h1 {
+  text-align: center;
+}

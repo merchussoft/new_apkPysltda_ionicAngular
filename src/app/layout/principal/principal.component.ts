@@ -27,7 +27,7 @@ export class PrincipalComponent implements OnInit {
         private serviceApi: ServiceloginService,
         private globalFuntion: FuncionesglobalesService
     ) {
-        this.code = localStorage.getItem('code');
+        this.code = localStorage.getItem('code_user');
         this.name_excel = localStorage.getItem('nombre') + ' ' + localStorage.getItem('lastname');
     }
 
@@ -42,12 +42,14 @@ export class PrincipalComponent implements OnInit {
                 this.dataList = true;
                 this.listHours = response;
                 this.dtTrigger.next();
+                // @ts-ignore
+                // this.globalFuntion.notificacionHoras(response.length, 'horas');
                 // this.rerender();
             });
     }
 
     uploadExcel() {
-        this.globalFuntion.swalTimmer('warning', 'pronto estara listo Cargar Excel', 1500);
+        this.globalFuntion.swalTimmer('warning', 'pronto estara listo Cargar Excel', 2500);
     }
 
     // tslint:disable-next-line:variable-name
@@ -58,6 +60,11 @@ export class PrincipalComponent implements OnInit {
         const options_table = new Array();
         this.serviceApi.reportHoursUser(this.code)
             .subscribe((response) => {
+                // @ts-ignore
+                if (!response.length) {
+                    this.globalFuntion.swalTimmer('warning', 'No se han registrado horas', 2500);
+                    return false;
+                }
                 // @ts-ignore
                 response.forEach((keys: any) => {
                     // tslint:disable-next-line:variable-name

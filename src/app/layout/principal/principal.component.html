@@ -41,7 +41,7 @@
         </div>
 
         <!--    table para la relacion de horas-->
-        <div class="table-responsive">
+        <div class="table-responsive" style="height: 100%">
             <table datatable class="hover" width="100%" [dtOptions]="dtOptions">
                 <thead>
                 <tr style="text-align: center;">
@@ -51,7 +51,7 @@
                     <th>iniciativa</th>
                     <th>Detalle Actividad</th>
                     <th>Actividad</th>
-                    <th>Lugar</th>
+                    <!--                    <th>Lugar</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -62,26 +62,38 @@
                     <td>{{hourslist.initiative}}</td>
                     <td>{{hourslist.activity_detail}}</td>
                     <td>{{hourslist.actividad}}</td>
-                    <td>{{hourslist.address}}</td>
+                    <!--                    <td>{{hourslist.address}}</td>-->
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <ion-footer>
-        <ion-tab-button (click)="uploadExcel()">
-            <ion-icon name="cloud-upload"></ion-icon>
-            <ion-label>Cargar Excel</ion-label>
-        </ion-tab-button>
 
-        <ion-tab-button (click)="downloadExcel(code)">
-            <ion-icon name="cloud-download"></ion-icon>
-            <ion-label>Descargar Excel</ion-label>
-        </ion-tab-button>
-    </ion-footer>
 
 </ion-content>
+
+<ion-footer style="background-color: #FFFFFF; position: static">
+
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-tab-button (click)="uploadExcel()">
+                    <ion-icon name="cloud-upload"></ion-icon>
+                    <ion-label>Cargar Excel</ion-label>
+                </ion-tab-button>
+            </ion-col>
+
+            <ion-col>
+                <ion-tab-button (click)="downloadExcel()">
+                    <ion-icon name="cloud-download"></ion-icon>
+                    <ion-label>Descargar Excel</ion-label>
+                </ion-tab-button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-footer>
 
 
 
